@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<!-- saved from url=(0029)/freemeta -->
+<html lang="ko"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>Freemeta | FreeBLOX</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta property="og:title" content="프리블록스">
+<meta property="og:description" content="">
+<meta property="og:type" content="website">
+<meta property="og:image" content="./img/freeblox_logo_og.jpg">
+<meta property="og:site_name" content="FreeBLOX::프리블록스">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@">
+<meta name="twitter:title" content="FreeBLOX::프리블록스">
+<meta name="twitter:description" content="">
+<meta name="twitter:image" content="/img/">
+<meta name="naver-site-verification" content="">
+<meta name="google-site-verification" content="RvswkMa_RI_FUwBdIBTXULNp9g-1jTpuIsiEcyODLto">
+<meta name="naver" content="nosublinks">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<meta http-equiv="Cache-Control" content="no-cache">
+<link rel="stylesheet" href="./Freemeta _ FreeBLOX_files/reset.min.css">
+<link rel="alternate" href="https://www.freemeta.co.kr/" hreflang="x-default">
+<link rel="apple-touch-icon" sizes="180x180" href="./img/ico/apple-touch-icon.png">
+<link rel="shortcut icon" href="./img/ico/favicon.ico">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="theme-color" content="#ffffff">
+<link rel="stylesheet" type="text/css" href="./Freemeta _ FreeBLOX_files/header.css">
+<link rel="stylesheet" type="text/css" href="./Freemeta _ FreeBLOX_files/reset_v2.css">
+<link rel="stylesheet" type="text/css" href="./Freemeta _ FreeBLOX_files/renewal_main.css">
+<link rel="stylesheet" type="text/css" href="./Freemeta _ FreeBLOX_files/download.css">
+<link href="./Freemeta _ FreeBLOX_files/aos.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="./Freemeta _ FreeBLOX_files/slick.css">
+<link rel="stylesheet" type="text/css" href="./Freemeta _ FreeBLOX_files/intro.css">
+<link rel="stylesheet" type="text/css" href="./Freemeta _ FreeBLOX_files/policy.css">
+
+<link rel="stylesheet" type="text/css" href="./Freemeta _ FreeBLOX_files/temp.css">
+<link rel="stylesheet" type="text/css" href="./Freemeta _ FreeBLOX_files/market.css">
+<link rel="stylesheet" type="text/css" href="./Freemeta _ FreeBLOX_files/modal.css">
+<link rel="stylesheet" type="text/css" href="./Freemeta _ FreeBLOX_files/freemeta.css">
+<script src="./Freemeta _ FreeBLOX_files/jquery.min.js.다운로드" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="./Freemeta _ FreeBLOX_files/freeblox.css">
+<link href="./Freemeta _ FreeBLOX_files/aos.css" rel="stylesheet">
+<script src="./Freemeta _ FreeBLOX_files/aos.js.다운로드" type="text/javascript"></script>
+
+<script type="text/javascript" src="./Freemeta _ FreeBLOX_files/slick.min.js.다운로드"></script>
+<script src="./Freemeta _ FreeBLOX_files/aos.js.다운로드" type="text/javascript"></script>
+<script type="text/javascript">
+		let common= null;
+	</script>
+<script type="text/javascript">
+	function Common(){
+
+		var delegate = null;
+		this.delegate = null;
+	
+		this.setDelegate = function(obj){
+			this.delegate = delegate = obj;
+		}
+	
+		this.windowOpen = function(destination){
+			if(destination == 'close'){
+				self.close();
+			}else{
+				window.open(destination, '_blank');
+			}
+		}
+		this.goto = function(destination){
+            if(destination == 'back'){
+                history.back();
+            }else if(destination == 'close'){
+                self.close();
+            }else{
+                let targetUri = '';
+                let targetScreen = 'Normal';
+                let targetTitle = '';
+
+                if(typeof destination == 'string'){
+                    targetUri = destination;
+                    targetScreen = (targetUri == '/') ? 'NormalNoneHeader' : targetScreen;
+                }else{
+                    targetUri = destination.uri;
+                    targetScreen = destination.screen;
+                    targetTitle = destination.title;
+                }
+                location.href = targetUri;
+            }
+		}
+
+		this.callAPI = function(method = 'GET', url, acceptVersion, parameter, jwt = null){
+	
+			let dataType = (method == 'GET') ? "text" : "json";
+			let apiUrl = (url.indexOf('http://') < 0 || url.indexOf('https://') < 0) ? '' + url : url;
+
+			let ajaxData = {
+				type		: method,
+				dataType	: dataType,
+				url		    : '' + url,
+				data        : parameter,
+				cache		: false
+			}
+
+			ajaxData.beforeSend = function(xhr){
+				xhr.setRequestHeader("accept-version", acceptVersion);
+				if(jwt != null){
+					xhr.setRequestHeader("Authorization", 'Bearer '+ jwt);
+				}
+			}
+			
+			const request = $.ajax(ajaxData);
+			return request;
+		}
+
+		// 동기 처리 전용 API 호출
+		this.callSyncAPI = function(method = 'GET', url, acceptVersion, parameter, jwt = null){
+	
+			let dataType = (method == 'GET') ? "text" : "json";
+			let apiUrl = (url.indexOf('http://') < 0 || url.indexOf('https://') < 0) ? '' + url : url;
+
+			let ajaxData = {
+				type		: method,
+				dataType	: dataType,
+				url		    : '' + url,
+				data        : parameter,
+				cache		: false,
+				async		: false				
+			}
+
+			ajaxData.beforeSend = function(xhr){
+				xhr.setRequestHeader("accept-version", acceptVersion);
+				if(jwt != null){
+					xhr.setRequestHeader("Authorization", 'Bearer '+ jwt);
+				}
+			}
+			
+			const request = $.ajax(ajaxData);
+			return request;
+		}		
+
+		this.callAdminAPI = function(method = 'GET', url, acceptVersion, parameter, jwt = null){
+	
+			let dataType = (method == 'GET') ? "text" : "json";
+			let apiUrl = (url.indexOf('http://') < 0 || url.indexOf('https://') < 0) ? '' + url : url;
+
+			let ajaxData = {
+				type		: method,
+				dataType	: dataType,
+				url		    : '' + url,
+				data        : parameter,
+				cache		: false,
+				timeout		: 1000 * 750
+			}
+
+			ajaxData.beforeSend = function(xhr){
+				xhr.setRequestHeader("accept-version", acceptVersion);
+				if(jwt != null){
+					xhr.setRequestHeader("Authorization", 'Bearer '+ jwt);
+				}
+			}
+			
+			const request = $.ajax(ajaxData);
+			return request;
+		}
+		
+		
+		this.millisToMinutesAndSeconds = function(millis) {
+        	const minutes = Math.floor(millis / 60000);
+        	const seconds = ((millis % 60000) / 1000).toFixed(0);
+    		return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+    	}
+
+		// this.gotoRealName = function(){
+		// 	win = window.open("/self-verify", "verify", "width=755, height=710");
+		// }
+	}
+
+
+	$(function() {
+		common = new Common();
+
+		const GET_LANG = 'ko';
+		if (GET_LANG === 'en') {
+			document.querySelector('body').classList.add('lang-en')
+		} else {
+			document.querySelector('body').classList.remove('lang-en')
+		}
+	});
+	</script></head>
+
+<body style="overflow-y: auto;">
+<header class="fb-header fb-header-scroll">
+<div class="fb-header-left">
+<button type="button" id="TABLET_LNB_BUTTON" onclick="if (!window.__cfRLUnblockHandlers) return false; TABLET_LNB_BUTTON_OPEN()" class="fb-header-lnb-button _tablet">TABLET_LNB</button>
+<div class="fb-header-logo">
+<a href="/">로고</a>
+</div>
+<div class="fb-header-family _desktop">
+<button type="button" class="fb-header-family-button _freemeta _freemeta-arrow" onmouseover="if (!window.__cfRLUnblockHandlers) return false; FREEMETA_BANNER_OPEN()">Freemeta</button>
+<!-- <button type="button" class="fb-header-family-button _aftmarket _aftmarket-arrow" onmouseover="if (!window.__cfRLUnblockHandlers) return false; AFTMARKET_BANNER_OPEN()">AFTmarket</button> -->
+</div>
+</div>
+<div class="fb-header-responsive-lnb _tablet" id="TABLET_LNB_MENU">
+<div class="fb-header-responsive-lnb-login-content">
+
+<button type="button" id="TABLET_LNB_CLOSE" class="fb-header-responsive-lnb-close" onclick="if (!window.__cfRLUnblockHandlers) return false; TABLET_LNB_BUTTON_CLOSE()">close</button>
+</div>
+<ul class="fb-header-responsive-lnb-menus _mobile">
+<li class="fb-header-responsive-lnb-item">
+<a href="https://ch.sooplive.co.kr/freeblox" target="_blank">커뮤니티</a>
+</li>
+
+</ul>
+<ul class="fb-header-responsive-lnb-list">
+<li class="fb-header-responsive-lnb-item">
+<button type="button" class="_tablet-aftmarket-logo fb-header-responsive-lnb-button" onclick="if (!window.__cfRLUnblockHandlers) return false; AFTMARKET_BANNER_OPEN()">AFTmarket</button>
+</li>
+<li class="fb-header-responsive-lnb-item">
+<button type="button" class="_tablet-freemeta-logo fb-header-responsive-lnb-button" onclick="if (!window.__cfRLUnblockHandlers) return false; FREEMETA_BANNER_OPEN()">Freemeta</button>
+</li>
+</ul>
+
+</div>
+<nav class="fb-header-menus">
+<ul class="fb-header-menus-list" onmouseleave="if (!window.__cfRLUnblockHandlers) return false; CHECK_SUBMENU()">
+
+<li class="fb-header-menus-item" onmouseover="if (!window.__cfRLUnblockHandlers) return false; COMUNITY_OPENMENU()">
+<p class="fb-header-menus-item-title">
+<a href="https://www.sooplive.co.kr/station/freeblox/post/182325737" target="_blank">공지사항</a>
+</p>
+</li>
+
+
+
+
+
+
+</ul>
+</nav>
+</header>
+<div class="fb-header-banner" style="display: none;">
+<div class="fb-header-banner-dim"></div>
+<div class="fb-header-banner-freemeta" onmouseleave="if (!window.__cfRLUnblockHandlers) return false; FREEMETA_BANNER_CLOSE()" style="display: none;">
+<div class="fb-header-banner-freemeta-content">
+<div class="fb-header-banner-freemeta-left">
+<figure class="fb-header-banner-freemeta-left-figure">
+<img src="./Freemeta _ FreeBLOX_files/freemeta_logo.svg" alt="freemeta_logo" title="freemeta_logo">
+</figure>
+<div class="fb-header-banner-freemeta-left-text">
+<h2 class="fb-header-banner-freemeta-left-title">블록체인 기술 기반의 멀티 플랫폼!</h2>
+<p class="fb-header-banner-freemeta-left-description">프리메타는 크리에이터들의 플랫폼이자 유저들의 놀이터 입니다.<br>Freeblox와 AFT마켓에서 즐겨보세요!</p>
+<a href="/freemeta" class="fb-header-banner-aftmarket-button">Freemeta 바로가기</a>
+</div>
+</div>
+<div class="fb-header-banner-freemeta-right">
+<ul class="fb-header-banner-freemeta-right-list _desktop">
+<li class="fb-header-banner-freemeta-right-item">
+<figure class="fb-header-banner-freemeta-right-figure _banner-freemeta">
+<img src="./Freemeta _ FreeBLOX_files/freemeta_logo.svg" alt="freemeta_logo" title="freemeta_logo">
+</figure>
+</li>
+<li class="fb-header-banner-freemeta-right-item">
+<figure class="fb-header-banner-freemeta-right-figure _banner-aftmarket">
+<img src="./Freemeta _ FreeBLOX_files/aftmarket_logo.svg" alt="aftmarket_logo" title="aftmarket_logo">
+</figure>
+</li>
+<li class="fb-header-banner-freemeta-right-item">
+<figure class="fb-header-banner-freemeta-right-figure _banner-freeblox">
+<img src="./Freemeta _ FreeBLOX_files/freeblox_logo_white.svg" alt="freeblox_white" title="freeblox_white">
+</figure>
+</li>
+</ul>
+<ul class="fb-header-banner-freemeta-right-list _banner-tablet">
+<li class="fb-header-banner-freemeta-right-item">
+<figure class="fb-header-banner-freemeta-right-figure _banner-aftmarket">
+<img src="./Freemeta _ FreeBLOX_files/aftmarket_logo.svg" alt="aftmarket_logo" title="aftmarket_logo">
+</figure>
+</li>
+<li class="fb-header-banner-freemeta-right-item">
+<figure class="fb-header-banner-freemeta-right-figure _banner-freemeta">
+<img src="./Freemeta _ FreeBLOX_files/freemeta_logo.svg" alt="freemeta_logo" title="freemeta_logo">
+</figure>
+</li>
+<li class="fb-header-banner-freemeta-right-item">
+<figure class="fb-header-banner-freemeta-right-figure _banner-freeblox">
+<img src="./Freemeta _ FreeBLOX_files/freeblox_logo_white.svg" alt="freeblox_white" title="freeblox_white">
+</figure>
+</li>
+</ul>
+<ul class="fb-header-banner-freemeta-right-list _mobile">
+<li class="fb-header-banner-freemeta-right-item">
+<figure class="fb-header-banner-freemeta-right-figure _banner-freemeta">
+<img src="./Freemeta _ FreeBLOX_files/freemeta_logo.svg" alt="freemeta_logo" title="freemeta_logo">
+</figure>
+</li>
+<li class="fb-header-banner-freemeta-right-item">
+<figure class="fb-header-banner-freemeta-right-figure _banner-aftmarket">
+<img src="./Freemeta _ FreeBLOX_files/aftmarket_logo.svg" alt="aftmarket_logo" title="aftmarket_logo">
+</figure>
+</li>
+<li class="fb-header-banner-freemeta-right-item">
+<figure class="fb-header-banner-freemeta-right-figure _banner-freeblox">
+<img src="./Freemeta _ FreeBLOX_files/freeblox_logo_white.svg" alt="freeblox_white" title="freeblox_white">
+</figure>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="fb-header-banner-aftmarket" onmouseleave="if (!window.__cfRLUnblockHandlers) return false; AFTMARKET_BANNER_CLOSE()" style="display: none;">
+<div class="fb-header-banner-aftmarket-content">
+<figure class="fb-header-banner-aftmarket-figure">
+<img src="./Freemeta _ FreeBLOX_files/aftmarket_logo.svg" alt="aftmarket_logo" title="aftmarket_logo">
+</figure>
+<div class="fb-header-banner-aftmarket-text">
+<h2 class="fb-header-banner-aftmarket-title">투자와 후원을 동시에!</h2>
+<p class="fb-header-banner-aftmarket-description">AFT Market에서는 다양한 콘텐츠의 NFT 상품을 판매합니다.<br>투자와 동시에 후원까지 되는 NFT 상품을 구경해보세요!</p>
+<a href="https://aftmarket.tv/" target="_blank" class="fb-header-banner-aftmarket-button">AFT Market 바로가기</a>
+</div>
+</div>
+</div>
+</div>
+<script type="text/javascript">
+    if(navigator.userAgent.indexOf("Trident") > 0){
+        window.location = 'microsoft-edge:' + location.href
+        setTimeout(winClose, 500)
+    }
+    else if(/MSIE \d |Trident.*rv:/.test(navigator.userAgent)){
+        window.location = 'microsoft-edge:' + location.href
+        setTimeout(winClose, 500)
+    }
+
+    function winClose() {
+        top.window.open('about:blank','_self').close();
+        top.window.opener=self;
+        top.self.close();
+    }
+</script>
+<script type="text/javascript">
+// $(document).ready(function() {
+//     let localCheck = false;
+//     if(window.location.href.indexOf("localhost") >= 0 || window.location.href.indexOf("127.0.0.1") >= 0){
+//         localCheck = true;
+//     }
+    
+//     if(!localCheck){
+//         document.domain = 'freemeta.net';
+//     }
+// });
+
+function login(){
+    const clientID = false ? 'mobile_freeblox_6649e9e12f603a9fc73c565f4cf1bdde' : 'pc_freeblox_e107312689a682d0b68f1cceea1c94ee';
+    const redirectURL = '/login/oauth';
+    const loginURL =  "https://auth.sooplive.co.kr/authorize.php?response_type=code&redirect_uri=" + redirectURL + "&state=&auth_type=logout&client_id=" + clientID + "&sns=1";
+
+    const windowFeatures = "menubar=no,location=no,resizable=no,scrollbars=no,status=no,width=700,height=800";
+    window.open(loginURL, "afreecatvLogin", windowFeatures);
+}
+
+const GET_URL_PARAMETER = ((sParam) => {
+    let sPageURL = window.location.search.substring(1),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+        }
+    }
+    return false;
+})
+
+const INTRO_SUB_MENU = document.querySelector('#INTRO_SUB_MENU')
+// const COMUNITY_SUB_MENU = document.querySelector('#COMUNITY_SUB_MENU')
+const LOGOUT_SUB_MENU = document.querySelector('#LOGOUT_SUB_MENU')
+
+// const LOGOUT_OPEN_MENU = (() => {
+//     if() {
+//         LOGOUT_SUB_MENU.style.display = 'block'
+//         COMUNITY_SUB_MENU.style.display = 'none'
+//         INTRO_SUB_MENU.style.display = 'none'
+//         FREEMETA_BANNER_CLOSE()
+//         AFTMARKET_BANNER_CLOSE()
+//     }
+// })
+
+// const LOGOUT_CLOSE_MENU = (() => {
+//     if() {
+//         LOGOUT_SUB_MENU.style.display = 'none'
+//     }
+// })
+
+const INTRO_OPEN_MENU = (() => {
+    INTRO_SUB_MENU.style.display = 'block'
+    // COMUNITY_SUB_MENU.style.display = 'none'
+    // if() {
+    //     LOGOUT_SUB_MENU.style.display = 'none'
+    // }
+    FREEMETA_BANNER_CLOSE()
+    AFTMARKET_BANNER_CLOSE()
+})
+
+const INTRO_CLOSE_MENU = (() => {
+    INTRO_SUB_MENU.style.display = 'none'
+})
+
+const COMUNITY_OPENMENU = (() => {
+    // COMUNITY_SUB_MENU.style.display = 'block'
+    INTRO_SUB_MENU.style.display = 'none'
+    // if() {
+    //     LOGOUT_SUB_MENU.style.display = 'none'
+    // }
+    FREEMETA_BANNER_CLOSE()
+    AFTMARKET_BANNER_CLOSE()
+})
+
+const COMUNITY_CLOSE_MENU = (() => {
+    // COMUNITY_SUB_MENU.style.display = 'none'
+})
+
+
+const TABLET_LNB_MENU = document.querySelector('#TABLET_LNB_MENU')
+const TABLET_LNB_BUTTON_OPEN = (() =>{
+    TABLET_LNB_MENU.className += ' _tablet-lnb-on'
+    TABLET_LNB_MENU.classList.replace('_tablet-lnb-off', '_tablet-lnb-on')
+    document.body.style.overflowY = 'hidden'
+    FREEMETA_BANNER_CLOSE()
+})
+
+const TABLET_LNB_BUTTON_CLOSE = (() =>{
+    TABLET_LNB_MENU.classList.replace('_tablet-lnb-on', '_tablet-lnb-off')
+    document.body.style.overflowY = 'auto'
+})
+
+const HEADER = document.querySelector('.fb-header')
+let afterScrollPosition
+
+document.addEventListener('scroll', () => {
+    afterScrollPosition = document.documentElement.scrollTop
+
+    afterScrollPosition === 0 ? HEADER.classList.remove('fb-header-scroll') : HEADER.classList.add('fb-header-scroll')
+    return false
+    AFTMARKET_BANNER_CLOSE()
+    FREEMETA_BANNER_CLOSE()
+    INTRO_CLOSE_MENU()
+    COMUNITY_CLOSE_MENU()
+    //LOGOUT_CLOSE_MENU()
+})
+
+const HEADER_BANNER = document.querySelector('.fb-header-banner')
+const HEADER_BANNER_FREEMETA = document.querySelector('.fb-header-banner-freemeta')
+const HEADER_BANNER_AFTMARKET = document.querySelector('.fb-header-banner-aftmarket')
+const HEADER_FAMILY_BUTTON = document.querySelector('.fb-header-family-button')
+const HEADER_FREEMETA_ARROW = document.querySelector('._freemeta-arrow')
+const HEADER_AFTMARKET_ARROW = document.querySelector('._aftmarket-arrow')
+
+const FREEMETA_BANNER_OPEN = (() => {
+    HEADER.classList.add('fb-header-scroll')
+    HEADER_BANNER.style.display = 'block'
+    HEADER_BANNER_FREEMETA.style.display = 'block'
+    HEADER_BANNER_AFTMARKET.style.display = 'none'
+    TABLET_LNB_MENU.classList.replace('_tablet-lnb-on', '_tablet-lnb-off')
+    HEADER_FREEMETA_ARROW.classList.add('fb-header-family-button-active')
+    HEADER_AFTMARKET_ARROW.classList.remove('fb-header-family-button-active')
+    document.body.style.overflowY = 'auto'
+    INTRO_CLOSE_MENU()
+    COMUNITY_CLOSE_MENU()
+    //LOGOUT_CLOSE_MENU()
+})
+
+const FREEMETA_BANNER_CLOSE = (() =>{
+    afterScrollPosition === 0 ? HEADER.classList.remove('fb-header-scroll') : HEADER.classList.add('fb-header-scroll')
+    HEADER_BANNER.style.display = 'none'
+    HEADER_BANNER_FREEMETA.style.display = 'none'
+    HEADER_BANNER_AFTMARKET.style.display = 'none'
+    HEADER_FREEMETA_ARROW.classList.remove('fb-header-family-button-active')
+    HEADER_AFTMARKET_ARROW.classList.remove('fb-header-family-button-active')
+})
+
+const AFTMARKET_BANNER_OPEN = (() => {
+    HEADER.classList.add('fb-header-scroll')
+    HEADER_FREEMETA_ARROW.classList.remove('fb-header-family-button-active')
+    HEADER_AFTMARKET_ARROW.classList.add('fb-header-family-button-active')
+    HEADER_BANNER.style.display = 'block'
+    HEADER_BANNER_FREEMETA.style.display = 'none'
+    HEADER_BANNER_AFTMARKET.style.display = 'block'
+    TABLET_LNB_MENU.classList.replace('_tablet-lnb-on', '_tablet-lnb-off')
+    document.body.style.overflowY = 'auto'
+    INTRO_CLOSE_MENU()
+    COMUNITY_CLOSE_MENU()
+    //LOGOUT_CLOSE_MENU()
+})
+
+const AFTMARKET_BANNER_CLOSE = (() =>{
+    afterScrollPosition === 0 ? HEADER.classList.remove('fb-header-scroll') : HEADER.classList.add('fb-header-scroll')
+    HEADER_BANNER.style.display = 'none'
+    HEADER_BANNER_FREEMETA.style.display = 'none'
+    HEADER_BANNER_AFTMARKET.style.display = 'none'
+    HEADER_FREEMETA_ARROW.classList.remove('fb-header-family-button-active')
+    HEADER_AFTMARKET_ARROW.classList.remove('fb-header-family-button-active')
+})
+
+const CHECK_SUBMENU = (() => {
+    // if (INTRO_SUB_MENU.style.display === 'block' || COMUNITY_SUB_MENU.style.display === 'block') {
+    if (INTRO_SUB_MENU.style.display === 'block') {
+        //LOGOUT_CLOSE_MENU()
+        INTRO_CLOSE_MENU()
+        COMUNITY_CLOSE_MENU()
+    }
+
+    // if ( && LOGOUT_SUB_MENU.style.display === 'block') {
+    //     if (LOGOUT_SUB_MENU.style.display === 'block') {
+    //         LOGOUT_CLOSE_MENU()
+    //     }
+    // }
+})
+
+const ALL_CLOSE_MENU = (() => {
+    INTRO_CLOSE_MENU()
+    COMUNITY_CLOSE_MENU()
+    //LOGOUT_CLOSE_MENU()
+})
+
+document.querySelector('.fb-header-banner-dim').addEventListener('click', () => {
+    AFTMARKET_BANNER_CLOSE()
+    FREEMETA_BANNER_CLOSE()
+})
+</script>
+<section class="freemeta-container">
+<div class="freemeta-header">
+<h2 class="freemeta-header-title">프리메타</h2>
+</div>
+<div class="freemeta-content">
+<h2 class="freemeta-content-title">
+방송, 커뮤니티, 플레이 콘텐츠 플랫폼 <span> 프리블록스</span>
+</h2>
+<div class="freemeta-info">
+<figure class="freemeta-info-graph">
+<!-- <img src="./Freemeta _ FreeBLOX_files/freemeta-info-img.png" alt="freemeta-graph" title="freemeta-graph"> -->
+<img  src="https://support.freemeta.net/~gitbook/image?url=https%3A%2F%2F754060679-files.gitbook.io%2F%7E%2Ffiles%2Fv0%2Fb%2Fgitbook-x-prod.appspot.com%2Fo%2Fspaces%252FaMpOLTelrOtNMfVmbNBj%252Ficon%252FJoTfxGfjMa0irDOrYeMM%252F%25ED%258C%258C%25EB%25B9%2584%25EC%25BD%2598.png%3Falt%3Dmedia%26token%3D67913149-d56a-4517-a404-5ca84af6b0f1&width=100&height=100&dpr=2&quality=100&sign=5c36ff41&sv=1" alt="freemeta-graph" title="freemeta-graph">
+</figure>
+
+    
+
+
+<div class="freemeta-info-text">
+<ul class="freemeta-info-text-list">
+<li class="freemeta-info-text-item">
+<h2 class="freemeta-info-text-title">User Generated Content Platform <br class="_only-mobile">프리블록스 (FREEBLOX)</h2>
+<p class="freemeta-info-text-description">버추얼 방송, 팬덤 커뮤니티, 글로벌 메타버스 플랫폼으로 도약하고 있습니다.</p>
+</li>
+
+</ul>
+<table class="freemeta-info-tbl">
+<colgroup><col span="1" width="25%">
+<col span="1" width="75%">
+</colgroup><tbody><tr>
+<th>회사명</th>
+<td>(주)프리메타(FreeMETA)</td>
+</tr>
+<tr>
+<th>설립일</th>
+<td>2021년 8월 4일</td>
+</tr>
+<tr>
+<th>대표이사</th>
+<td>엄재원</td>
+</tr>
+<tr>
+<th>주요사업</th>
+<td>메타버스 플랫폼</td>
+</tr>
+<tr>
+<th>주소</th>
+<td>경기도 성남시 분당구 판교로 228번길 15,1단지 2동</td>
+</tr>
+
+
+</tbody></table>
+<br/><br/>
+<h2 class="freemeta-info-text-title">해산 및 채권신고공고 (1차)</h2><br/>
+
+                    <p class="freemeta-info-text-description">
+
+당 회사는 2025년 12월 31일자 개최한 임시주주총회에서 해산을 결의하고, 현재 청산절차를 진행중인바 당회사 해산에 대하여 이의가 있으신 분이나 채권을 갖고 계신분은 본 공고 게재 익일로부터 2개월이내에 그 채권액을 신고하여 주시기 바랍니다. 만약 위 기일내에 이의나 채권신고가 없으면 그러한 채권은 청산에서 제외 됩니다. <br/><br/>
+
+2025년 12월 31일 <br/><br/>
+
+주식회사 프리메타 <br/><br/>
+
+경기도 성남시 분당구 판교로228번길 15, 2동 801호<br/>
+
+(삼평동, 판교세븐벤처밸리1단지) <br/><br/>
+
+청산인 엄재원<br/></p>
+
+<br/><br/>
+
+<br/><br/>
+
+                    <h2 class="freemeta-info-text-title">해산 및 채권신고공고 (2차)</h2><br/>
+
+                    <p class="freemeta-info-text-description">
+
+당 회사는 2025년 12월 31일자 개최한 임시주주총회에서 해산을 결의하고, 현재 청산절차를 진행중인바 당회사 해산에 대하여 이의가 있으신 분이나 채권을 갖고 계신분은 본 공고 게재 익일로부터 2개월이내에 그 채권액을 신고하여 주시기 바랍니다. 만약 위 기일내에 이의나 채권신고가 없으면 그러한 채권은 청산에서 제외 됩니다. <br/><br/>
+
+2026년 1월 5일 <br/><br/>
+
+주식회사 프리메타 <br/><br/>
+
+경기도 성남시 분당구 판교로228번길 15, 2동 801호<br/>
+
+(삼평동, 판교세븐벤처밸리1단지) <br/><br/>
+
+청산인 엄재원<br/></p>
+</div>
+</div>
+</div>
+</section>
+<link rel="stylesheet" type="text/css" href="./Freemeta _ FreeBLOX_files/renewal_footer.css">
+<footer class="fb-footer">
+<ul class="fb-footer-list">
+<li class="fb-footer-item">
+<a href="https://support.freemeta.net/terms-of-use/privacy-policy" target="_blank">개인정보처리방침</a>
+</li>
+<li class="fb-footer-item">
+<a href="https://support.freemeta.net/terms-of-use" target="_blank">서비스 이용약관</a>
+</li>
+<li class="fb-footer-item">
+<a href="https://support.freemeta.net/terms-of-use/youth-protection-policy" target="_blank">청소년보호정책</a>
+</li>
+<li class="fb-footer-item">
+<a href="https://support.freemeta.net/settlement" target="_blank">결산공고</a>
+</li>
+<li class="fb-footer-item">
+<a href="/freemeta#">문의 메일 : freeblox@sooplive.com</a>
+</li>
+</ul>
+<div class="fb-footer-lang" style="display: none;">
+<select name="lang" id="LANG" class="fb-footer-lang-select" onchange="if (!window.__cfRLUnblockHandlers) return false; javascript:location.href=&#39;/lang/&#39;+this.value">
+<option value="ko" selected="">한국어</option>
+<option value="en">영어</option>
+</select>
+</div>
+<div class="fb-footer-info">
+<p class="fb-footer-info-description">프리메타 사업자등록번호 : 414-81-08097 대표이사 : 엄재원 경기도 성남시 분당구 판교로 228번길 15, 1단지 2동</p>
+<p class="fb-footer-info-description">Copyright 2021. All rights reserved. Freemeta™</p>
+</div>
+</footer>
+
+<script async="" src="./Freemeta _ FreeBLOX_files/js" type="text/javascript"></script>
+<script type="text/javascript">
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-HZKPC1ED5K');
+</script>
+
+</body></html>
